@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.shop.mapper.ShopPurchaseOrderDetailMapper">
+    
+    <resultMap type="ShopPurchaseOrderDetail" id="ShopPurchaseOrderDetailResult">
+        <result property="detailId"    column="detail_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="productId"    column="product_id"    />
+        <result property="specId"    column="spec_id"    />
+        <result property="buyPrice"    column="buy_price"    />
+        <result property="buyNum"    column="buy_num"    />
+        <result property="totalAmount"    column="total_amount"    />
+        <result property="receiptNum"    column="receipt_num"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectShopPurchaseOrderDetailVo">
+        select detail_id, order_id, product_id, spec_id, buy_price, buy_num, total_amount, receipt_num, status, create_by, create_time, update_by, update_time, remark from shop_purchase_order_detail
+    </sql>
+
+    <select id="selectShopPurchaseOrderDetailList" parameterType="ShopPurchaseOrderDetail" resultMap="ShopPurchaseOrderDetailResult">
+        <include refid="selectShopPurchaseOrderDetailVo"/>
+        <where>  
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="specId != null "> and spec_id = #{specId}</if>
+            <if test="buyPrice != null "> and buy_price = #{buyPrice}</if>
+            <if test="buyNum != null "> and buy_num = #{buyNum}</if>
+            <if test="totalAmount != null "> and total_amount = #{totalAmount}</if>
+            <if test="receiptNum != null "> and receipt_num = #{receiptNum}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectShopPurchaseOrderDetailByDetailId" parameterType="Long" resultMap="ShopPurchaseOrderDetailResult">
+        <include refid="selectShopPurchaseOrderDetailVo"/>
+        where detail_id = #{detailId}
+    </select>
+
+    <insert id="insertShopPurchaseOrderDetail" parameterType="ShopPurchaseOrderDetail" useGeneratedKeys="true" keyProperty="detailId">
+        insert into shop_purchase_order_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="productId != null">product_id,</if>
+            <if test="specId != null">spec_id,</if>
+            <if test="buyPrice != null">buy_price,</if>
+            <if test="buyNum != null">buy_num,</if>
+            <if test="totalAmount != null">total_amount,</if>
+            <if test="receiptNum != null">receipt_num,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="productId != null">#{productId},</if>
+            <if test="specId != null">#{specId},</if>
+            <if test="buyPrice != null">#{buyPrice},</if>
+            <if test="buyNum != null">#{buyNum},</if>
+            <if test="totalAmount != null">#{totalAmount},</if>
+            <if test="receiptNum != null">#{receiptNum},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShopPurchaseOrderDetail" parameterType="ShopPurchaseOrderDetail">
+        update shop_purchase_order_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="specId != null">spec_id = #{specId},</if>
+            <if test="buyPrice != null">buy_price = #{buyPrice},</if>
+            <if test="buyNum != null">buy_num = #{buyNum},</if>
+            <if test="totalAmount != null">total_amount = #{totalAmount},</if>
+            <if test="receiptNum != null">receipt_num = #{receiptNum},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where detail_id = #{detailId}
+    </update>
+
+    <delete id="deleteShopPurchaseOrderDetailByDetailId" parameterType="Long">
+        delete from shop_purchase_order_detail where detail_id = #{detailId}
+    </delete>
+
+    <delete id="deleteShopPurchaseOrderDetailByDetailIds" parameterType="String">
+        delete from shop_purchase_order_detail where detail_id in 
+        <foreach item="detailId" collection="array" open="(" separator="," close=")">
+            #{detailId}
+        </foreach>
+    </delete>
+</mapper>

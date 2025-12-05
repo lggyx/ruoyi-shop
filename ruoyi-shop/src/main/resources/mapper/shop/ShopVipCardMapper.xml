@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.shop.mapper.ShopVipCardMapper">
+    
+    <resultMap type="ShopVipCard" id="ShopVipCardResult">
+        <result property="cardId"    column="card_id"    />
+        <result property="memberId"    column="member_id"    />
+        <result property="cardNo"    column="card_no"    />
+        <result property="cardType"    column="card_type"    />
+        <result property="balance"    column="balance"    />
+        <result property="totalAmount"    column="total_amount"    />
+        <result property="expireDate"    column="expire_date"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectShopVipCardVo">
+        select card_id, member_id, card_no, card_type, balance, total_amount, expire_date, status, create_by, create_time, update_by, update_time, remark from shop_vip_card
+    </sql>
+
+    <select id="selectShopVipCardList" parameterType="ShopVipCard" resultMap="ShopVipCardResult">
+        <include refid="selectShopVipCardVo"/>
+        <where>  
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+            <if test="cardNo != null  and cardNo != ''"> and card_no = #{cardNo}</if>
+            <if test="cardType != null  and cardType != ''"> and card_type = #{cardType}</if>
+            <if test="balance != null "> and balance = #{balance}</if>
+            <if test="totalAmount != null "> and total_amount = #{totalAmount}</if>
+            <if test="expireDate != null "> and expire_date = #{expireDate}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectShopVipCardByCardId" parameterType="Long" resultMap="ShopVipCardResult">
+        <include refid="selectShopVipCardVo"/>
+        where card_id = #{cardId}
+    </select>
+
+    <insert id="insertShopVipCard" parameterType="ShopVipCard" useGeneratedKeys="true" keyProperty="cardId">
+        insert into shop_vip_card
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">member_id,</if>
+            <if test="cardNo != null and cardNo != ''">card_no,</if>
+            <if test="cardType != null">card_type,</if>
+            <if test="balance != null">balance,</if>
+            <if test="totalAmount != null">total_amount,</if>
+            <if test="expireDate != null">expire_date,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">#{memberId},</if>
+            <if test="cardNo != null and cardNo != ''">#{cardNo},</if>
+            <if test="cardType != null">#{cardType},</if>
+            <if test="balance != null">#{balance},</if>
+            <if test="totalAmount != null">#{totalAmount},</if>
+            <if test="expireDate != null">#{expireDate},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShopVipCard" parameterType="ShopVipCard">
+        update shop_vip_card
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberId != null">member_id = #{memberId},</if>
+            <if test="cardNo != null and cardNo != ''">card_no = #{cardNo},</if>
+            <if test="cardType != null">card_type = #{cardType},</if>
+            <if test="balance != null">balance = #{balance},</if>
+            <if test="totalAmount != null">total_amount = #{totalAmount},</if>
+            <if test="expireDate != null">expire_date = #{expireDate},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where card_id = #{cardId}
+    </update>
+
+    <delete id="deleteShopVipCardByCardId" parameterType="Long">
+        delete from shop_vip_card where card_id = #{cardId}
+    </delete>
+
+    <delete id="deleteShopVipCardByCardIds" parameterType="String">
+        delete from shop_vip_card where card_id in 
+        <foreach item="cardId" collection="array" open="(" separator="," close=")">
+            #{cardId}
+        </foreach>
+    </delete>
+</mapper>

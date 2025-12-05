@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.shop.mapper.ShopStockLogMapper">
+    
+    <resultMap type="ShopStockLog" id="ShopStockLogResult">
+        <result property="logId"    column="log_id"    />
+        <result property="productId"    column="product_id"    />
+        <result property="specId"    column="spec_id"    />
+        <result property="changeType"    column="change_type"    />
+        <result property="changeNum"    column="change_num"    />
+        <result property="beforeStock"    column="before_stock"    />
+        <result property="afterStock"    column="after_stock"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectShopStockLogVo">
+        select log_id, product_id, spec_id, change_type, change_num, before_stock, after_stock, order_no, create_by, create_time, remark from shop_stock_log
+    </sql>
+
+    <select id="selectShopStockLogList" parameterType="ShopStockLog" resultMap="ShopStockLogResult">
+        <include refid="selectShopStockLogVo"/>
+        <where>  
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="specId != null "> and spec_id = #{specId}</if>
+            <if test="changeType != null  and changeType != ''"> and change_type = #{changeType}</if>
+            <if test="changeNum != null "> and change_num = #{changeNum}</if>
+            <if test="beforeStock != null "> and before_stock = #{beforeStock}</if>
+            <if test="afterStock != null "> and after_stock = #{afterStock}</if>
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+        </where>
+    </select>
+    
+    <select id="selectShopStockLogByLogId" parameterType="Long" resultMap="ShopStockLogResult">
+        <include refid="selectShopStockLogVo"/>
+        where log_id = #{logId}
+    </select>
+
+    <insert id="insertShopStockLog" parameterType="ShopStockLog" useGeneratedKeys="true" keyProperty="logId">
+        insert into shop_stock_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">product_id,</if>
+            <if test="specId != null">spec_id,</if>
+            <if test="changeType != null and changeType != ''">change_type,</if>
+            <if test="changeNum != null">change_num,</if>
+            <if test="beforeStock != null">before_stock,</if>
+            <if test="afterStock != null">after_stock,</if>
+            <if test="orderNo != null">order_no,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">#{productId},</if>
+            <if test="specId != null">#{specId},</if>
+            <if test="changeType != null and changeType != ''">#{changeType},</if>
+            <if test="changeNum != null">#{changeNum},</if>
+            <if test="beforeStock != null">#{beforeStock},</if>
+            <if test="afterStock != null">#{afterStock},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShopStockLog" parameterType="ShopStockLog">
+        update shop_stock_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="specId != null">spec_id = #{specId},</if>
+            <if test="changeType != null and changeType != ''">change_type = #{changeType},</if>
+            <if test="changeNum != null">change_num = #{changeNum},</if>
+            <if test="beforeStock != null">before_stock = #{beforeStock},</if>
+            <if test="afterStock != null">after_stock = #{afterStock},</if>
+            <if test="orderNo != null">order_no = #{orderNo},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where log_id = #{logId}
+    </update>
+
+    <delete id="deleteShopStockLogByLogId" parameterType="Long">
+        delete from shop_stock_log where log_id = #{logId}
+    </delete>
+
+    <delete id="deleteShopStockLogByLogIds" parameterType="String">
+        delete from shop_stock_log where log_id in 
+        <foreach item="logId" collection="array" open="(" separator="," close=")">
+            #{logId}
+        </foreach>
+    </delete>
+</mapper>

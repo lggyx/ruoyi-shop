@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.shop.mapper.ShopProductMapper">
+    
+    <resultMap type="ShopProduct" id="ShopProductResult">
+        <result property="productId"    column="product_id"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="supplierId"    column="supplier_id"    />
+        <result property="productName"    column="product_name"    />
+        <result property="productCode"    column="product_code"    />
+        <result property="barcode"    column="barcode"    />
+        <result property="specType"    column="spec_type"    />
+        <result property="priceIn"    column="price_in"    />
+        <result property="priceSale"    column="price_sale"    />
+        <result property="priceVip"    column="price_vip"    />
+        <result property="unit"    column="unit"    />
+        <result property="brand"    column="brand"    />
+        <result property="origin"    column="origin"    />
+        <result property="shelfLife"    column="shelf_life"    />
+        <result property="warningStock"    column="warning_stock"    />
+        <result property="mainImage"    column="main_image"    />
+        <result property="album"    column="album"    />
+        <result property="description"    column="description"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectShopProductVo">
+        select product_id, category_id, supplier_id, product_name, product_code, barcode, spec_type, price_in, price_sale, price_vip, unit, brand, origin, shelf_life, warning_stock, main_image, album, description, status, del_flag, create_by, create_time, update_by, update_time, remark from shop_product
+    </sql>
+
+    <select id="selectShopProductList" parameterType="ShopProduct" resultMap="ShopProductResult">
+        <include refid="selectShopProductVo"/>
+        <where>  
+            <if test="categoryId != null "> and category_id = #{categoryId}</if>
+            <if test="supplierId != null "> and supplier_id = #{supplierId}</if>
+            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="productCode != null  and productCode != ''"> and product_code = #{productCode}</if>
+            <if test="barcode != null  and barcode != ''"> and barcode = #{barcode}</if>
+            <if test="specType != null  and specType != ''"> and spec_type = #{specType}</if>
+            <if test="priceIn != null "> and price_in = #{priceIn}</if>
+            <if test="priceSale != null "> and price_sale = #{priceSale}</if>
+            <if test="priceVip != null "> and price_vip = #{priceVip}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="brand != null  and brand != ''"> and brand = #{brand}</if>
+            <if test="origin != null  and origin != ''"> and origin = #{origin}</if>
+            <if test="shelfLife != null "> and shelf_life = #{shelfLife}</if>
+            <if test="warningStock != null "> and warning_stock = #{warningStock}</if>
+            <if test="mainImage != null  and mainImage != ''"> and main_image = #{mainImage}</if>
+            <if test="album != null  and album != ''"> and album = #{album}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectShopProductByProductId" parameterType="Long" resultMap="ShopProductResult">
+        <include refid="selectShopProductVo"/>
+        where product_id = #{productId}
+    </select>
+
+    <insert id="insertShopProduct" parameterType="ShopProduct" useGeneratedKeys="true" keyProperty="productId">
+        insert into shop_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="categoryId != null">category_id,</if>
+            <if test="supplierId != null">supplier_id,</if>
+            <if test="productName != null and productName != ''">product_name,</if>
+            <if test="productCode != null">product_code,</if>
+            <if test="barcode != null">barcode,</if>
+            <if test="specType != null">spec_type,</if>
+            <if test="priceIn != null">price_in,</if>
+            <if test="priceSale != null">price_sale,</if>
+            <if test="priceVip != null">price_vip,</if>
+            <if test="unit != null">unit,</if>
+            <if test="brand != null">brand,</if>
+            <if test="origin != null">origin,</if>
+            <if test="shelfLife != null">shelf_life,</if>
+            <if test="warningStock != null">warning_stock,</if>
+            <if test="mainImage != null">main_image,</if>
+            <if test="album != null">album,</if>
+            <if test="description != null">description,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="supplierId != null">#{supplierId},</if>
+            <if test="productName != null and productName != ''">#{productName},</if>
+            <if test="productCode != null">#{productCode},</if>
+            <if test="barcode != null">#{barcode},</if>
+            <if test="specType != null">#{specType},</if>
+            <if test="priceIn != null">#{priceIn},</if>
+            <if test="priceSale != null">#{priceSale},</if>
+            <if test="priceVip != null">#{priceVip},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="brand != null">#{brand},</if>
+            <if test="origin != null">#{origin},</if>
+            <if test="shelfLife != null">#{shelfLife},</if>
+            <if test="warningStock != null">#{warningStock},</if>
+            <if test="mainImage != null">#{mainImage},</if>
+            <if test="album != null">#{album},</if>
+            <if test="description != null">#{description},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShopProduct" parameterType="ShopProduct">
+        update shop_product
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="supplierId != null">supplier_id = #{supplierId},</if>
+            <if test="productName != null and productName != ''">product_name = #{productName},</if>
+            <if test="productCode != null">product_code = #{productCode},</if>
+            <if test="barcode != null">barcode = #{barcode},</if>
+            <if test="specType != null">spec_type = #{specType},</if>
+            <if test="priceIn != null">price_in = #{priceIn},</if>
+            <if test="priceSale != null">price_sale = #{priceSale},</if>
+            <if test="priceVip != null">price_vip = #{priceVip},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="brand != null">brand = #{brand},</if>
+            <if test="origin != null">origin = #{origin},</if>
+            <if test="shelfLife != null">shelf_life = #{shelfLife},</if>
+            <if test="warningStock != null">warning_stock = #{warningStock},</if>
+            <if test="mainImage != null">main_image = #{mainImage},</if>
+            <if test="album != null">album = #{album},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where product_id = #{productId}
+    </update>
+
+    <delete id="deleteShopProductByProductId" parameterType="Long">
+        delete from shop_product where product_id = #{productId}
+    </delete>
+
+    <delete id="deleteShopProductByProductIds" parameterType="String">
+        delete from shop_product where product_id in 
+        <foreach item="productId" collection="array" open="(" separator="," close=")">
+            #{productId}
+        </foreach>
+    </delete>
+</mapper>

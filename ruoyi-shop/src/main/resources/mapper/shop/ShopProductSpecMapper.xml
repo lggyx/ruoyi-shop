@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.shop.mapper.ShopProductSpecMapper">
+    
+    <resultMap type="ShopProductSpec" id="ShopProductSpecResult">
+        <result property="specId"    column="spec_id"    />
+        <result property="productId"    column="product_id"    />
+        <result property="specName"    column="spec_name"    />
+        <result property="specCode"    column="spec_code"    />
+        <result property="priceIn"    column="price_in"    />
+        <result property="priceSale"    column="price_sale"    />
+        <result property="priceVip"    column="price_vip"    />
+        <result property="stock"    column="stock"    />
+        <result property="warningStock"    column="warning_stock"    />
+        <result property="barcode"    column="barcode"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectShopProductSpecVo">
+        select spec_id, product_id, spec_name, spec_code, price_in, price_sale, price_vip, stock, warning_stock, barcode, status, del_flag, create_by, create_time, update_by, update_time, remark from shop_product_spec
+    </sql>
+
+    <select id="selectShopProductSpecList" parameterType="ShopProductSpec" resultMap="ShopProductSpecResult">
+        <include refid="selectShopProductSpecVo"/>
+        <where>  
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="specName != null  and specName != ''"> and spec_name like concat('%', #{specName}, '%')</if>
+            <if test="specCode != null  and specCode != ''"> and spec_code = #{specCode}</if>
+            <if test="priceIn != null "> and price_in = #{priceIn}</if>
+            <if test="priceSale != null "> and price_sale = #{priceSale}</if>
+            <if test="priceVip != null "> and price_vip = #{priceVip}</if>
+            <if test="stock != null "> and stock = #{stock}</if>
+            <if test="warningStock != null "> and warning_stock = #{warningStock}</if>
+            <if test="barcode != null  and barcode != ''"> and barcode = #{barcode}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectShopProductSpecBySpecId" parameterType="Long" resultMap="ShopProductSpecResult">
+        <include refid="selectShopProductSpecVo"/>
+        where spec_id = #{specId}
+    </select>
+
+    <insert id="insertShopProductSpec" parameterType="ShopProductSpec" useGeneratedKeys="true" keyProperty="specId">
+        insert into shop_product_spec
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">product_id,</if>
+            <if test="specName != null and specName != ''">spec_name,</if>
+            <if test="specCode != null">spec_code,</if>
+            <if test="priceIn != null">price_in,</if>
+            <if test="priceSale != null">price_sale,</if>
+            <if test="priceVip != null">price_vip,</if>
+            <if test="stock != null">stock,</if>
+            <if test="warningStock != null">warning_stock,</if>
+            <if test="barcode != null">barcode,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">#{productId},</if>
+            <if test="specName != null and specName != ''">#{specName},</if>
+            <if test="specCode != null">#{specCode},</if>
+            <if test="priceIn != null">#{priceIn},</if>
+            <if test="priceSale != null">#{priceSale},</if>
+            <if test="priceVip != null">#{priceVip},</if>
+            <if test="stock != null">#{stock},</if>
+            <if test="warningStock != null">#{warningStock},</if>
+            <if test="barcode != null">#{barcode},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShopProductSpec" parameterType="ShopProductSpec">
+        update shop_product_spec
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="specName != null and specName != ''">spec_name = #{specName},</if>
+            <if test="specCode != null">spec_code = #{specCode},</if>
+            <if test="priceIn != null">price_in = #{priceIn},</if>
+            <if test="priceSale != null">price_sale = #{priceSale},</if>
+            <if test="priceVip != null">price_vip = #{priceVip},</if>
+            <if test="stock != null">stock = #{stock},</if>
+            <if test="warningStock != null">warning_stock = #{warningStock},</if>
+            <if test="barcode != null">barcode = #{barcode},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where spec_id = #{specId}
+    </update>
+
+    <delete id="deleteShopProductSpecBySpecId" parameterType="Long">
+        delete from shop_product_spec where spec_id = #{specId}
+    </delete>
+
+    <delete id="deleteShopProductSpecBySpecIds" parameterType="String">
+        delete from shop_product_spec where spec_id in 
+        <foreach item="specId" collection="array" open="(" separator="," close=")">
+            #{specId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.shop.mapper.ShopStockMapper">
+    
+    <resultMap type="ShopStock" id="ShopStockResult">
+        <result property="stockId"    column="stock_id"    />
+        <result property="productId"    column="product_id"    />
+        <result property="specId"    column="spec_id"    />
+        <result property="stockQuantity"    column="stock_quantity"    />
+        <result property="freezeQuantity"    column="freeze_quantity"    />
+        <result property="totalIn"    column="total_in"    />
+        <result property="totalOut"    column="total_out"    />
+        <result property="warningStock"    column="warning_stock"    />
+        <result property="lastInTime"    column="last_in_time"    />
+        <result property="lastOutTime"    column="last_out_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectShopStockVo">
+        select stock_id, product_id, spec_id, stock_quantity, freeze_quantity, total_in, total_out, warning_stock, last_in_time, last_out_time, create_by, create_time, update_by, update_time, remark from shop_stock
+    </sql>
+
+    <select id="selectShopStockList" parameterType="ShopStock" resultMap="ShopStockResult">
+        <include refid="selectShopStockVo"/>
+        <where>  
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="specId != null "> and spec_id = #{specId}</if>
+            <if test="stockQuantity != null "> and stock_quantity = #{stockQuantity}</if>
+            <if test="freezeQuantity != null "> and freeze_quantity = #{freezeQuantity}</if>
+            <if test="totalIn != null "> and total_in = #{totalIn}</if>
+            <if test="totalOut != null "> and total_out = #{totalOut}</if>
+            <if test="warningStock != null "> and warning_stock = #{warningStock}</if>
+            <if test="lastInTime != null "> and last_in_time = #{lastInTime}</if>
+            <if test="lastOutTime != null "> and last_out_time = #{lastOutTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectShopStockByStockId" parameterType="Long" resultMap="ShopStockResult">
+        <include refid="selectShopStockVo"/>
+        where stock_id = #{stockId}
+    </select>
+
+    <insert id="insertShopStock" parameterType="ShopStock" useGeneratedKeys="true" keyProperty="stockId">
+        insert into shop_stock
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">product_id,</if>
+            <if test="specId != null">spec_id,</if>
+            <if test="stockQuantity != null">stock_quantity,</if>
+            <if test="freezeQuantity != null">freeze_quantity,</if>
+            <if test="totalIn != null">total_in,</if>
+            <if test="totalOut != null">total_out,</if>
+            <if test="warningStock != null">warning_stock,</if>
+            <if test="lastInTime != null">last_in_time,</if>
+            <if test="lastOutTime != null">last_out_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">#{productId},</if>
+            <if test="specId != null">#{specId},</if>
+            <if test="stockQuantity != null">#{stockQuantity},</if>
+            <if test="freezeQuantity != null">#{freezeQuantity},</if>
+            <if test="totalIn != null">#{totalIn},</if>
+            <if test="totalOut != null">#{totalOut},</if>
+            <if test="warningStock != null">#{warningStock},</if>
+            <if test="lastInTime != null">#{lastInTime},</if>
+            <if test="lastOutTime != null">#{lastOutTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShopStock" parameterType="ShopStock">
+        update shop_stock
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="specId != null">spec_id = #{specId},</if>
+            <if test="stockQuantity != null">stock_quantity = #{stockQuantity},</if>
+            <if test="freezeQuantity != null">freeze_quantity = #{freezeQuantity},</if>
+            <if test="totalIn != null">total_in = #{totalIn},</if>
+            <if test="totalOut != null">total_out = #{totalOut},</if>
+            <if test="warningStock != null">warning_stock = #{warningStock},</if>
+            <if test="lastInTime != null">last_in_time = #{lastInTime},</if>
+            <if test="lastOutTime != null">last_out_time = #{lastOutTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where stock_id = #{stockId}
+    </update>
+
+    <delete id="deleteShopStockByStockId" parameterType="Long">
+        delete from shop_stock where stock_id = #{stockId}
+    </delete>
+
+    <delete id="deleteShopStockByStockIds" parameterType="String">
+        delete from shop_stock where stock_id in 
+        <foreach item="stockId" collection="array" open="(" separator="," close=")">
+            #{stockId}
+        </foreach>
+    </delete>
+</mapper>

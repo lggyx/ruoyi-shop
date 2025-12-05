@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.shop.mapper.ShopPurchaseOrderMapper">
+    
+    <resultMap type="ShopPurchaseOrder" id="ShopPurchaseOrderResult">
+        <result property="orderId"    column="order_id"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="supplierId"    column="supplier_id"    />
+        <result property="orderAmount"    column="order_amount"    />
+        <result property="paidAmount"    column="paid_amount"    />
+        <result property="status"    column="status"    />
+        <result property="orderTime"    column="order_time"    />
+        <result property="expectTime"    column="expect_time"    />
+        <result property="auditBy"    column="audit_by"    />
+        <result property="auditTime"    column="audit_time"    />
+        <result property="receiptBy"    column="receipt_by"    />
+        <result property="receiptTime"    column="receipt_time"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectShopPurchaseOrderVo">
+        select order_id, order_no, supplier_id, order_amount, paid_amount, status, order_time, expect_time, audit_by, audit_time, receipt_by, receipt_time, del_flag, create_by, create_time, update_by, update_time, remark from shop_purchase_order
+    </sql>
+
+    <select id="selectShopPurchaseOrderList" parameterType="ShopPurchaseOrder" resultMap="ShopPurchaseOrderResult">
+        <include refid="selectShopPurchaseOrderVo"/>
+        <where>  
+            <if test="orderNo != null  and orderNo != ''"> and order_no = #{orderNo}</if>
+            <if test="supplierId != null "> and supplier_id = #{supplierId}</if>
+            <if test="orderAmount != null "> and order_amount = #{orderAmount}</if>
+            <if test="paidAmount != null "> and paid_amount = #{paidAmount}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="orderTime != null "> and order_time = #{orderTime}</if>
+            <if test="expectTime != null "> and expect_time = #{expectTime}</if>
+            <if test="auditBy != null  and auditBy != ''"> and audit_by = #{auditBy}</if>
+            <if test="auditTime != null "> and audit_time = #{auditTime}</if>
+            <if test="receiptBy != null  and receiptBy != ''"> and receipt_by = #{receiptBy}</if>
+            <if test="receiptTime != null "> and receipt_time = #{receiptTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectShopPurchaseOrderByOrderId" parameterType="Long" resultMap="ShopPurchaseOrderResult">
+        <include refid="selectShopPurchaseOrderVo"/>
+        where order_id = #{orderId}
+    </select>
+
+    <insert id="insertShopPurchaseOrder" parameterType="ShopPurchaseOrder" useGeneratedKeys="true" keyProperty="orderId">
+        insert into shop_purchase_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null and orderNo != ''">order_no,</if>
+            <if test="supplierId != null">supplier_id,</if>
+            <if test="orderAmount != null">order_amount,</if>
+            <if test="paidAmount != null">paid_amount,</if>
+            <if test="status != null">status,</if>
+            <if test="orderTime != null">order_time,</if>
+            <if test="expectTime != null">expect_time,</if>
+            <if test="auditBy != null">audit_by,</if>
+            <if test="auditTime != null">audit_time,</if>
+            <if test="receiptBy != null">receipt_by,</if>
+            <if test="receiptTime != null">receipt_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null and orderNo != ''">#{orderNo},</if>
+            <if test="supplierId != null">#{supplierId},</if>
+            <if test="orderAmount != null">#{orderAmount},</if>
+            <if test="paidAmount != null">#{paidAmount},</if>
+            <if test="status != null">#{status},</if>
+            <if test="orderTime != null">#{orderTime},</if>
+            <if test="expectTime != null">#{expectTime},</if>
+            <if test="auditBy != null">#{auditBy},</if>
+            <if test="auditTime != null">#{auditTime},</if>
+            <if test="receiptBy != null">#{receiptBy},</if>
+            <if test="receiptTime != null">#{receiptTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShopPurchaseOrder" parameterType="ShopPurchaseOrder">
+        update shop_purchase_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderNo != null and orderNo != ''">order_no = #{orderNo},</if>
+            <if test="supplierId != null">supplier_id = #{supplierId},</if>
+            <if test="orderAmount != null">order_amount = #{orderAmount},</if>
+            <if test="paidAmount != null">paid_amount = #{paidAmount},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="orderTime != null">order_time = #{orderTime},</if>
+            <if test="expectTime != null">expect_time = #{expectTime},</if>
+            <if test="auditBy != null">audit_by = #{auditBy},</if>
+            <if test="auditTime != null">audit_time = #{auditTime},</if>
+            <if test="receiptBy != null">receipt_by = #{receiptBy},</if>
+            <if test="receiptTime != null">receipt_time = #{receiptTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where order_id = #{orderId}
+    </update>
+
+    <delete id="deleteShopPurchaseOrderByOrderId" parameterType="Long">
+        delete from shop_purchase_order where order_id = #{orderId}
+    </delete>
+
+    <delete id="deleteShopPurchaseOrderByOrderIds" parameterType="String">
+        delete from shop_purchase_order where order_id in 
+        <foreach item="orderId" collection="array" open="(" separator="," close=")">
+            #{orderId}
+        </foreach>
+    </delete>
+</mapper>
